@@ -1,0 +1,216 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>خدمة متابعة أسعار الدولار والأعلاف لحظة بلحظة</title>
+<meta name="author" content="محمد مكاوي">
+<meta name="description" content="خدمة متابعة أسعار الدولار والأعلاف في مصر لحظة بلحظة، مقدمة من مزارع الفهد للإنتاج الحيواني">
+<style>
+:root{--bg:#f6f8f3;--card:#fff;--tx:#1b1f17;--mu:#667060;--ac:#2e7d32;--gd:#b8860b;--bd:#dfe6d6;--ok:#2e7d32;--er:#c62828}
+@media (prefers-color-scheme:dark){:root{--bg:#11140e;--card:#1b1f16;--tx:#eef2e6;--mu:#9aa58f;--ac:#66bb6a;--gd:#e0b23a;--bd:#2f3828;--ok:#66bb6a;--er:#ef5350}}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--tx);font-family:Tahoma,"Segoe UI",Arial,sans-serif;line-height:1.6}
+main{max-width:680px;margin:0 auto;padding:16px}
+header{text-align:center;padding:14px 8px 10px;border-bottom:2px solid var(--ac);margin-bottom:14px}
+h1{font-size:21px;margin:0 0 6px;line-height:1.5}
+.by{font-size:14px;color:var(--mu)}.by b{color:var(--ac)}
+.card{background:var(--card);border:1px solid var(--bd);border-radius:14px;padding:14px;margin-bottom:14px}
+h2{font-size:17px;margin:0 0 8px}
+label{font-size:13px;color:var(--mu);display:block;margin:8px 0 4px}
+input,select{width:100%;padding:10px;font-size:16px;border:1px solid var(--bd);border-radius:10px;background:var(--bg);color:var(--tx);font-family:inherit}
+.row{display:flex;gap:10px}.row>div{flex:1}
+.big{font-size:28px;font-weight:700;color:var(--ac);margin-top:10px;direction:ltr;text-align:right}
+.grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:10px}
+.grid div{background:var(--bg);border-radius:10px;padding:10px;text-align:center;font-size:13px;color:var(--mu)}
+.grid b{display:block;font-size:17px;color:var(--tx);direction:ltr}
+.tw{overflow-x:auto;margin-top:10px}table{width:100%;border-collapse:collapse;font-size:14px}
+td{padding:8px 6px;border-bottom:1px solid var(--bd);text-align:right}
+td.n{direction:ltr;text-align:left;font-weight:600;white-space:nowrap}
+button{padding:4px 12px;border:1px solid var(--bd);background:var(--bg);color:var(--tx);border-radius:10px;font-size:12px;font-family:inherit;cursor:pointer}
+.note{font-size:12px;color:var(--mu)}
+.st{font-size:13px;color:var(--mu);margin-top:6px}
+.dot{display:inline-block;width:9px;height:9px;border-radius:50%;background:var(--mu);margin-left:6px}
+.dot.live{background:var(--ok)}.dot.off{background:var(--er)}
+footer{text-align:center;font-size:13px;color:var(--mu);padding:18px 0 28px;border-top:1px solid var(--bd);margin-top:8px}
+footer b{color:var(--tx)}
+</style>
+</head>
+<body>
+<main>
+<header>
+<h1>خدمة متابعة أسعار الدولار والأعلاف لحظة بلحظة</h1>
+<div class="by">مقدمة من <b>مزارع الفهد للإنتاج الحيواني</b></div>
+<div class="by">إدارة <b>م. محمد مكاوي</b></div>
+</header>
+
+<div class="card">
+<h2>💵 الدولار مقابل الجنيه المصري والعملات الأخرى</h2>
+<div class="row">
+<div><label>المبلغ بالدولار</label><input id="amt" type="number" value="1" min="0" inputmode="decimal"></div>
+<div><label>العملة</label><select id="cur"></select></div>
+</div>
+<div class="big" id="res"></div>
+<div class="st"><span class="dot" id="dot1"></span><span id="st1">جارٍ التحميل...</span> <button id="rf1">تحديث</button></div>
+</div>
+
+<div class="card">
+<h2>🌾 أسعار الأعلاف في مصر (بالجنيه المصري)</h2>
+<label>اختر نوع العلف</label>
+<select id="fsel"></select>
+<div class="grid" id="fres"></div>
+<div class="tw"><table id="feed"></table></div>
+<div class="st"><span class="dot" id="dot2"></span><span id="st2">جارٍ التحميل...</span> <button id="rf2">تحديث</button></div>
+<div class="note" id="feednote" style="margin-top:6px"></div>
+</div>
+
+<div class="card">
+<h2>🪙 الذهب العالمي</h2>
+<div class="grid">
+<div>الأونصة (دولار)<b id="g_oz"></b></div>
+<div>الأونصة (<span class="cn"></span>)<b id="g_ozc"></b></div>
+<div>جرام عيار 24<b id="g24"></b></div>
+<div>جرام عيار 21<b id="g21"></b></div>
+</div>
+<div class="note" style="margin-top:8px">بالعملة المختارة في قسم الدولار أعلاه. الجرام = الأونصة ÷ 31.1035.</div>
+</div>
+
+<div class="card note">
+⚠️ أسعار الدولار عالمية متوسطة (mid-market)، وقد تختلف عن أسعار البنوك والصرافة. أسعار الأعلاف أسعار سوق متداولة وتختلف حسب الشركة والمنطقة والنقل. كل الأسعار للاسترشاد فقط وليست نصيحة مالية.
+مصادر: <a href="https://www.exchangerate-api.com" target="_blank" rel="noopener">Exchange Rate API</a> · <a href="https://gold-api.com" target="_blank" rel="noopener">Gold-API</a> · أسعار الأعلاف من رصد السوق المصري (فيتو والبوابة الحكومية لأسعار السلع).
+</div>
+
+<footer>
+تصميم وتطوير: <b>محمد مكاوي</b><br>
+© <span id="yr">2026</span> جميع حقوق النشر محفوظة لمزارع الفهد للإنتاج الحيواني
+</footer>
+</main>
+
+<script>
+/* ===== الإعدادات ===== */
+var CFG = {
+  FX_URL:   "https://open.er-api.com/v6/latest/USD",
+  GOLD_URL: "https://api.gold-api.com/price/XAU",
+  FEED_URL: "/.netlify/functions/feeds",   // الخدمة المرفقة (Netlify Function)
+  PROXY: "https://api.allorigins.win/raw?url=",   // بديل احتياطي يعمل من المتصفح
+  TAG_PAGE: "https://www.vetogate.com/keyword/109834",
+  REFRESH_SEC: 60
+};
+
+var NAMES = {EGP:"مصر - جنيه",KWD:"الكويت - دينار",SAR:"السعودية - ريال",AED:"الإمارات - درهم",QAR:"قطر - ريال",BHD:"البحرين - دينار",OMR:"عُمان - ريال",JOD:"الأردن - دينار",EUR:"اليورو",GBP:"الجنيه الإسترليني",JPY:"الين الياباني",CHF:"الفرنك السويسري",CAD:"الدولار الكندي",CNY:"اليوان الصيني",INR:"الروبية الهندية",TRY:"الليرة التركية"};
+var R = {EGP:55.8,KWD:0.307,SAR:3.75,AED:3.6725,QAR:3.64,BHD:0.376,OMR:0.385,JOD:0.709,EUR:0.8961,GBP:0.7469,JPY:157.58,CHF:0.825,CAD:1.4,CNY:6.647,INR:94.87,TRY:49.93};
+var GOLD = 3906;
+
+/* أسعار الأعلاف في مصر: قيم مرجعية بتاريخ ٢ نوفمبر ٢٠٢٦ تظهر عند تعذّر الاتصال */
+var FEED_ITEMS = [
+  {k:"corn_arg",   n:"ذرة أرجنتيني مستوردة", u:"طن"},
+  {k:"corn_bra",   n:"ذرة برازيلي مستوردة",  u:"طن"},
+  {k:"corn_ukr",   n:"ذرة أوكراني مستوردة",  u:"طن"},
+  {k:"corn_flake", n:"ذرة أرجنتيني (كورن فلاك)", u:"طن"},
+  {k:"corn_yellow",n:"ذرة صفراء محلية",      u:"شيكارة"},
+  {k:"corn_white", n:"ذرة بيضاء",            u:"طن"},
+  {k:"soy44",      n:"صويا 44%",             u:"طن"},
+  {k:"soy46",      n:"صويا 46%",             u:"طن"},
+  {k:"soymeal",    n:"كسب صويا مستورد",      u:"طن"},
+  {k:"bran",       n:"ردة",                  u:"طن"},
+  {k:"glutofeed",  n:"جلوتوفيد محلي",        u:"طن"},
+  {k:"gluten",     n:"جلوتين محلي",          u:"طن"},
+  {k:"sunmeal",    n:"كسب عباد الشمس 36%",   u:"طن"}
+];
+var FEED = {corn_arg:15000,corn_bra:15000,corn_ukr:14500,corn_flake:16500,corn_yellow:758,corn_white:15740,soy44:26100,soy46:27100,soymeal:27100,bran:14000,glutofeed:15200,gluten:42500,sunmeal:20000};
+var FEED_DATE = "٢ نوفمبر ٢٠٢٦", feedLive = false;
+
+var $ = function(i){return document.getElementById(i)};
+function f(n,d){return Number(n).toLocaleString("en-US",{maximumFractionDigits:d,minimumFractionDigits:d})}
+function timeout(ms){var c=new AbortController();setTimeout(function(){c.abort()},ms);return c.signal}
+function hhmm(){return new Date().toLocaleTimeString("ar-EG",{hour:"2-digit",minute:"2-digit"})}
+
+var cur=$("cur"), fsel=$("fsel");
+for (var k in NAMES){var o=document.createElement("option");o.value=k;o.textContent=NAMES[k]+" ("+k+")";cur.appendChild(o)}
+cur.value="EGP";
+FEED_ITEMS.forEach(function(it){var o=document.createElement("option");o.value=it.k;o.textContent=it.n;fsel.appendChild(o)});
+$("yr").textContent=new Date().getFullYear();
+
+function renderFX(){
+  var c=cur.value, r=R[c], a=parseFloat($("amt").value)||0;
+  $("res").textContent=f(a*r,r<1?3:2)+" "+c;
+  var oz=GOLD*r, g=oz/31.1035;
+  $("g_oz").textContent="$"+f(GOLD,2);
+  $("g_ozc").textContent=f(oz,2)+" "+c;
+  $("g24").textContent=f(g,2)+" "+c;
+  $("g21").textContent=f(g*21/24,2)+" "+c;
+  document.querySelectorAll(".cn").forEach(function(e){e.textContent=c});
+}
+function renderFeed(){
+  var it=FEED_ITEMS.filter(function(x){return x.k===fsel.value})[0], p=FEED[it.k];
+  function b(t,v){return "<div>"+t+"<b>"+v+"</b></div>"}
+  var h=b("السعر بالجنيه المصري / "+it.u, f(p,0)+" ج.م");
+  if(it.u==="طن") h+=b("بالجنيه المصري / كجم", f(p/1000,2)+" ج.م");
+  else h+=b("الصنف", "محلي");
+  $("fres").innerHTML=h;
+  var t="";
+  FEED_ITEMS.forEach(function(x){t+="<tr><td>"+x.n+"</td><td class='n'>"+f(FEED[x.k],0)+" ج.م</td><td>/"+x.u+"</td></tr>"});
+  $("feed").innerHTML=t;
+  $("feednote").textContent=feedLive?"أسعار محدّثة تلقائياً من السوق المصري.":"أسعار مرجعية من السوق المصري بتاريخ "+FEED_DATE+" (ليست لحظية حتى يتم ربط خدمة التحديث التلقائي).";
+}
+
+function loadFX(){
+  $("st1").textContent="جارٍ التحديث...";
+  var a=fetch(CFG.FX_URL,{signal:timeout(10000)}).then(function(r){return r.json()}).then(function(d){
+    if(!d.rates)throw 0; for(var k in NAMES) if(d.rates[k]) R[k]=d.rates[k]; return true}).catch(function(){return false});
+  var g=fetch(CFG.GOLD_URL,{signal:timeout(10000)}).then(function(r){return r.json()}).then(function(d){
+    var p=d.price||d.Price; if(!(p>0))throw 0; GOLD=p; return true}).catch(function(){return false});
+  Promise.all([a,g]).then(function(x){
+    $("dot1").className="dot "+(x[0]?"live":"off");
+    $("st1").textContent=x[0]?"أسعار حية · آخر تحديث "+hhmm():"تعذّر الاتصال، تظهر قيم احتياطية من ٢ نوفمبر ٢٠٢٦";
+    renderFX();
+  });
+}
+
+/* ===== قراءة نشرة الأعلاف داخل المتصفح (بديل احتياطي) ===== */
+function pickF(t,label,lo,hi,gap){
+  var m=t.match(new RegExp(label+"[^\\d]{0,"+(gap||25)+"}?(?:نحو|الطن|للطن)?\\s*(\\d[\\d,\\.]*)\\s*(ألف)?"));
+  if(!m)return null; var v=parseFloat(m[1].replace(/,/g,"")); if(m[2]&&v<1000)v*=1000;
+  return v>=lo&&v<=hi?v:null}
+function parseFeedText(text){
+  var t=text.replace(/\s+/g," "), o={
+  corn_arg:pickF(t,"الذرة أرجنتيني",5000,60000),corn_bra:pickF(t,"الذرة برازيلي",5000,60000),
+  corn_ukr:pickF(t,"الذرة الأوكراني",5000,60000,70),corn_flake:pickF(t,"كورن فلاك[^\\d]{0,30}?سعر الطن",5000,80000),
+  corn_yellow:pickF(t,"شيكارة الذرة الصفراء",100,5000),corn_white:pickF(t,"طن الذرة البيضاء",2000,60000),
+  soy44:pickF(t,"صويا 44%",8000,80000),soy46:pickF(t,"صويا 46%",8000,80000),soymeal:pickF(t,"كسب صويا مستورد",8000,80000),
+  bran:pickF(t,"طن الردة",3000,50000),glutofeed:pickF(t,"جلوتوفيد محلي",3000,50000),
+  gluten:pickF(t,"جلوتين محلي",10000,120000),sunmeal:pickF(t,"كسب عباد 36%",5000,80000)};
+  for(var k in o) if(o[k]===null) delete o[k]; return o}
+function viaProxy(){
+  var P=CFG.PROXY;
+  return fetch(P+encodeURIComponent(CFG.TAG_PAGE),{signal:timeout(15000)}).then(function(r){return r.text()}).then(function(html){
+    var re=/<a[^>]+href="(?:https?:\/\/www\.vetogate\.com)?\/(\d+)"[^>]*>([\s\S]*?)<\/a>/g,m,best=0;
+    while((m=re.exec(html))){ if(/أسعار الأعلاف والحبوب/.test(m[2])&&+m[1]>best)best=+m[1] }
+    if(!best)throw 0;
+    return fetch(P+encodeURIComponent("https://www.vetogate.com/"+best),{signal:timeout(15000)});
+  }).then(function(r){return r.text()}).then(function(html){
+    var doc=new DOMParser().parseFromString(html,"text/html");
+    var items=parseFeedText(doc.body?doc.body.textContent:html);
+    if(Object.keys(items).length<5)throw 0;
+    var d=(html.match(/published_time:\s*([0-9\-]{10})/)||[])[1]||"";
+    return {items:items,date:d};
+  })}
+
+function loadFeed(){
+  $("st2").textContent="جارٍ التحديث...";
+  var own=!CFG.FEED_URL?Promise.reject():fetch(CFG.FEED_URL,{signal:timeout(15000)}).then(function(r){if(!r.ok)throw 0;return r.json()}).then(function(d){if(!d.items)throw 0;return d});
+  own.catch(function(){return viaProxy()}).then(function(d){
+    var n=0; for(var k in d.items) if(d.items[k]>0){FEED[k]=d.items[k];n++}
+    if(!n)throw 0; feedLive=true; if(d.date)FEED_DATE=d.date;
+    $("dot2").className="dot live"; $("st2").textContent="أسعار حية · آخر تحديث "+hhmm()+(d.date?" (نشرة "+d.date+")":"");
+  }).catch(function(){feedLive=false;$("dot2").className="dot off";$("st2").textContent="تعذّر الاتصال، تظهر قيم احتياطية من "+FEED_DATE})
+  .then(renderFeed);
+}
+
+$("amt").oninput=renderFX; cur.onchange=renderFX; fsel.onchange=renderFeed;
+$("rf1").onclick=loadFX; $("rf2").onclick=loadFeed;
+renderFX(); renderFeed(); loadFX(); loadFeed();
+setInterval(loadFX, CFG.REFRESH_SEC*1000); setInterval(loadFeed, 15*60*1000);
+</script>
+</body>
+</html>
